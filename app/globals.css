@@ -183,6 +183,7 @@
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
   --animate-fade-in: fade-in 0.3s linear forwards;
+  --animate-move-down: move-down 0.3s linear forwards;
 
   --color-gray-50: var(--color-gray-50);
   --color-gray-100: var(--color-gray-100);
@@ -260,6 +261,17 @@
   }
 }
 
+@keyframes move-down {
+  0% {
+    /* opacity: 0.6; */
+    max-height: 0;
+  }
+  100% {
+    opacity: 1;
+    max-height: 500px;
+  }
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
@@ -268,7 +280,7 @@
     @apply bg-background text-foreground;
   }
   .container {
-    @apply mx-auto;
+    @apply mx-auto px-4;
   }
 }
 
@@ -290,7 +302,7 @@
   }
 
   .btn-primary {
-    @apply flex-center gap-4 bg-brown-500 text-white rounded-full py-4 px-24 cursor-pointer hover:bg-brown-600 border hover:border-brown-200  transition duration-200 hover:translate-y-0.5 hover:shadow-md active:scale-95;
+    @apply flex-center gap-4 bg-brown-500 text-white rounded-full py-4 px-16 md:px-24 cursor-pointer hover:bg-brown-600    transition duration-200 hover:translate-y-0.5 hover:shadow-md active:scale-95;
   }
 }
 
@@ -317,10 +329,45 @@
   @apply flex items-center justify-center;
 }
 
+@utility flex-center-reset {
+  @apply flex items-stretch justify-stretch;
+}
+
 @utility flex-between {
   @apply flex items-center justify-between;
 }
 
 @utility left-center {
   @apply left-1/2 -translate-x-1/2;
+}
+
+@media only screen and (max-width: 1280px) {
+  .hero-section {
+    background-image: url(../public/home/coffee-view.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+
+  .hero-section::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.75);
+    z-index: 0;
+  }
+}
+
+@media only screen and (min-width: 1280px) {
+  .hero-section::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--color-background);
+    z-index: 0;
+  }
 }
