@@ -33,6 +33,7 @@ export type CategoryTypes = {
 export type CategoriesTypes = CategoryTypes[];
 
 export type ProductTypes = {
+  product_sizes: any;
   id: number;
   title: string;
   description: string | null;

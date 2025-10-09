@@ -10,14 +10,17 @@ import SectionHeader from "@/components/web/ui/SectionHeader";
 import { getProducts } from "@/utils/web/fetchData";
 import React from "react";
 import Image from "next/image";
-import { ProductTypes } from "@/lib/types";
+import PrimaryButton from "@/components/web/ui/PrimaryButton";
+import { GoLinkExternal } from "react-icons/go";
+import ProductCard from "@/components/web/products/ProductCard";
 
 async function SpecialProductsSection() {
   const data = await getProducts();
 
   console.log(data);
+
   return (
-    <section className="py-[50px] mt-[50px]  bg-beige-100">
+    <section className="py-[50px] mt-[50px]  bg-brown-500/5">
       <div className="container">
         <SectionHeader title="المنتجات المميزة" />
 
@@ -31,26 +34,12 @@ async function SpecialProductsSection() {
         >
           <CarouselContent>
             {data?.map((product, index) => (
-              <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
-                <div className="p-1 ">
-                  <Card className="bg-beige-200 rounded-[50px] rounded-tr-none">
-                    <CardContent className="flex flex-col aspect-square items-center justify-center p-4">
-                      <Image
-                        src={`${process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL}/${product.image}`}
-                        alt={product.title}
-                        className="rounded-[50px] rounded-tr-none max-h-[293px] object-contain"
-                        width={360}
-                        height={293}
-                      />
-                      <div>
-                        <div>
-                          <span>{product.title}</span>
-                          <p>{product.description}</p>
-                        </div>
-                        {/* <span>{product}</span> */}
-                      </div>
-                    </CardContent>
-                  </Card>
+              <CarouselItem
+                key={index}
+                className="md:basis-1/2 lg:basis-1/3 xl:basis-1/4"
+              >
+                <div className="p-1 h-full">
+                  <ProductCard product={product} />
                 </div>
               </CarouselItem>
             ))}

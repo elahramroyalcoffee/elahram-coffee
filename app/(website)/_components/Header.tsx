@@ -12,13 +12,7 @@ async function Header() {
       {/* lg screens header */}
       <header className="container bg-beige-400/90 px-8 py-0 rounded-full max-w-[90%] fixed left-center top-4 flex-between z-20 hidden lg:flex">
         <Link href={"/"}>
-          <Image
-            src={logo}
-            alt="logo"
-            width={77}
-            height={77}
-            className="h-auto"
-          />
+          <Image src={logo} alt="logo" width={66.99} height={65} className="" />
         </Link>
 
         <Navbar />
@@ -43,13 +37,7 @@ async function Header() {
       {/* small screens header */}
       <header className="container bg-beige-400/90 px-8 py-1 rounded-full fixed left-center top-4 max-w-[90%] flex-between z-20 lg:hidden flex">
         <Link href={"/"}>
-          <Image
-            src={logo}
-            alt="logo"
-            width={64}
-            height={120}
-            className="!h-auto"
-          />
+          <Image src={logo} alt="logo" width={66.99} height={65} className="" />
         </Link>
 
         {/* <Navbar /> */}
