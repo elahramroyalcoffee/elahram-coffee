@@ -13,7 +13,6 @@ function Header() {
   useEffect(() => {
     const scrollY = (e: Event) => {
       if (window.scrollY > 100) {
-        console.log(1);
         document
           .querySelectorAll("header")
           ?.forEach((header) => header?.classList.add("sticky-header"));
@@ -31,7 +30,7 @@ function Header() {
   return (
     <>
       {/* lg screens header */}
-      <header className="container bg-beige-400/98 px-8 py-0 rounded-full duration-400 max-w-[90%] transition-all fixed left-center top-4 flex-between z-20 hidden lg:flex">
+      <header className="container bg-beige-600/98 px-8 py-0 rounded-full duration-400 max-w-[90%] transition-all fixed left-center top-4 flex-between z-20 hidden lg:flex">
         <Link href={"/"}>
           <Image src={logo} alt="logo" width={66.99} height={65} className="" />
         </Link>
@@ -43,20 +42,20 @@ function Header() {
           {/* cart */}
           <Link
             href={"/cart"}
-            className="bg-beige-200 rounded-full  w-10 h-10 flex-center cursor-pointer hover:bg-brown-400 group transition duration-100"
+            className=" rounded-full  w-10 h-10 flex-center cursor-pointer bg-brown-400 hover:bg-brown-500 group transition duration-100"
           >
             <Image
               src={cart}
               alt="logo"
               width={20}
               height={20}
-              className="h-auto group-hover:invert-100 transition duration-100"
+              className="h-auto invert-100 transition duration-100"
             />
           </Link>
         </div>
       </header>
       {/* small screens header */}
-      <header className="container bg-beige-400/98 px-8 py-1 rounded-full duration-400 transition-all fixed left-center top-4 max-w-[90%] flex-between z-20 lg:hidden flex">
+      <header className="container bg-beige-600/98 px-8 py-1 rounded-full duration-400 transition-all fixed left-center top-4 max-w-[90%] flex-between z-20 lg:hidden flex">
         <Link href={"/"}>
           <Image src={logo} alt="logo" width={66.99} height={65} className="" />
         </Link>
@@ -67,14 +66,14 @@ function Header() {
           {/* cart */}
           <Link
             href={"/cart"}
-            className="bg-beige-200 rounded-full w-10 h-10 flex-center cursor-pointer hover:bg-brown-600 group transition"
+            className=" rounded-full w-10 h-10 flex-center cursor-pointer bg-brown-400 group transition"
           >
             <Image
               src={cart}
               alt="logo"
               width={24}
               height={24}
-              className="h-auto group-hover:invert-100 transition"
+              className="h-auto invert-100 transition"
             />
           </Link>
           {/* Mobile navbar */}

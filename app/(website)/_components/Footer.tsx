@@ -9,7 +9,7 @@ import file from "@/public/icons/file.svg";
 
 function Footer() {
   return (
-    <footer className="py-[50px] container grid lg:grid-cols-2">
+    <footer className="py-[50px] container grid lg:grid-cols-2 mt-[120px]">
       <div className="flex-center  gap-4 ">
         <div>
           <Image
@@ -20,11 +20,11 @@ function Footer() {
             className=""
           />
         </div>
-        {/* <p className="font-cairo text-gray-300 max-w-[392px]">
+        <p className="font-cairo text-gray-300 max-w-[392px]">
           نستورد أجود حبوب القهوة الخضراء العالمية ليتم تحميصها وطحنها بعناية
           ودقة وبخبرة 35 عامًا من شغفنا بالقهوة نفتخر بحفاظنا على مذاق متميز
           وسعي دائم لارضاء كافة الاذواق من عشاق القهوة
-        </p> */}
+        </p>
       </div>
       <div className="grid lg:grid-cols-2">
         <div className="flex flex-col gap-4">

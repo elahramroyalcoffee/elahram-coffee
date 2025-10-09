@@ -6,7 +6,7 @@ import AboutUsSection from "./_components/home/AboutUsSection";
 
 function Home() {
   return (
-    <main>
+    <main className="bg-beige-50">
       <HeroSection />
       <CategoriesSection />
       <SpecialProductsSection />

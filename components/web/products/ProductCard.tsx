@@ -4,9 +4,11 @@ import { GoLinkExternal } from "react-icons/go";
 import PrimaryButton from "../ui/PrimaryButton";
 import Image from "next/image";
 import Link from "next/link";
-function ProductCard({ product }: any) {
+function ProductCard({ product, className = "" }: any) {
   return (
-    <Card className="bg-brown-50 rounded-[50px] rounded-tr-none p-0  h-full">
+    <Card
+      className={`bg-brown-50 rounded-[50px] rounded-tr-none p-0  h-full ${className}`}
+    >
       <Link
         href={`/products/${product.id}`}
         className=" hover:-translate-y-1 duration-300 transition-all rounded-[50px] rounded-tr-none "

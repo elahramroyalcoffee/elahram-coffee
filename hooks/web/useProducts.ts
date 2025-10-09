@@ -1,5 +1,6 @@
+import page from "@/app/admin/page";
 import { supabase } from "@/utils/supabase";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 interface Filters {
   search: string;
@@ -16,11 +17,15 @@ function useProducts() {
 
   const [data, setData] = useState<any>(null);
   const [loading, setLoading] = useState(false);
+  const totalPagesRef = useRef(1);
 
   const getProducts = async (filters: Filters) => {
     try {
       setLoading(true);
-      const { data } = await supabase
+
+      const categoriesQuery = supabase.from("categories").select("*");
+
+      const query = supabase
         .from("products")
         .select(
           `
@@ -37,10 +42,40 @@ function useProducts() {
           weight
         )
       )
-    `
+    `,
+          { count: "exact" }
         )
-        .limit(10);
-      return data;
+        .eq("in_stock", true);
+
+      if (
+        filters.category &&
+        filters.category.length > 0 &&
+        filters.category != "all"
+      ) {
+        query.in("category_id", Array(filters.category));
+      }
+
+      if (filters.search && !!filters.search.length) {
+        query.ilike("title", `%${filters.search}%`);
+      }
+
+      // query.limit(6);
+      query.order("created_at", { ascending: false });
+      query.range(6 * filters.page - 6, 6 * filters.page - 1);
+
+      const [categoriesResponse, productsResonse] = await Promise.all([
+        categoriesQuery,
+        query,
+      ]);
+
+      // const { data } = await query;
+      totalPagesRef.current = Math.ceil((productsResonse.count || 0) / 6);
+
+      return {
+        categories: categoriesResponse.data,
+        products: productsResonse.data,
+        count: productsResonse.count,
+      };
     } catch (error) {
       console.log(error);
     } finally {
@@ -60,6 +95,7 @@ function useProducts() {
     filters,
     setFilters,
     refetch: () => getProducts(filters),
+    totalPages: totalPagesRef.current,
   };
 }
 

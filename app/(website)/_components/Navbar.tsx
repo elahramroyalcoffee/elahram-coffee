@@ -14,12 +14,12 @@ function Navbar() {
           <li key={idx}>
             <Link
               href={link.path}
-              className={`relative text-black/75 hover:text-brown-700 focus:text-brown-700  group transition  p-2 select-none font-semibold text-lg
+              className={`relative text-black/60 hover:text-brown-700 focus:text-brown-700  group transition  p-2 select-none font-semibold text-lg
                 ${
                   (
                     link.path == "/"
                       ? pathname == link.path
-                      : pathname.includes(link.path)
+                      : pathname?.includes(link.path)
                   )
                     ? "text-brown-700"
                     : ""
@@ -28,14 +28,14 @@ function Navbar() {
             >
               {link.name}
               <span
-                className={`absolute top-[86%] rounded-full right-[7%] w-0  h-0.5 bg-brown-300 group-hover:w-[86%] group-focus:w-[86%] transition-all duration-400
+                className={`absolute top-[86%] rounded-full right-[7%] w-0  h-0.5 bg-brown-600 group-hover:w-[86%] group-focus:w-[86%] transition-all duration-400
                 ${
                   (
                     link.path == "/"
                       ? pathname == link.path
-                      : pathname.includes(link.path)
+                      : pathname?.includes(link.path)
                   )
-                    ? "w-[86%] bg-brown-300/30 h-0.5"
+                    ? "w-[86%] h-0.5"
                     : ""
                 }
                 `}

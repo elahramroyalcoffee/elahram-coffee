@@ -24,7 +24,7 @@ function PaginationProvider({
   // Generate page numbers to show
   const generatePageNumbers = () => {
     const pages = [];
-    const maxVisiblePages = 5;
+    const maxVisiblePages = 6;
 
     if (totalPages <= maxVisiblePages) {
       // Show all pages if total is small

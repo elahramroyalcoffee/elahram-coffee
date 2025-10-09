@@ -1,61 +1,93 @@
 "use client";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+// import { Checkbox } from "@/components/ui/checkbox";
+// import { Input } from "@/components/ui/input";
+// import { Label } from "@/components/ui/label";
+// import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import useProducts from "@/hooks/web/useProducts";
-import { supabase } from "@/utils/supabase";
-import React, { use, useEffect, useState } from "react";
-
-const getCategories = async () => {
-  try {
-    const { data } = await supabase.from("categories").select("*");
-    return data;
-  } catch (error) {
-    console.log(error);
-  }
-};
+import { ProductTypes } from "@/lib/types";
+// import { supabase } from "@/utils/supabase";
+// import React, { use, useEffect, useState } from "react";
+import ProductsFilter from "./ProductsFilter";
+import ProductCard from "@/components/web/products/ProductCard";
+import LoadingProductCatd from "@/components/web/products/LoadingProductCatd";
+import PaginationProvider from "@/components/web/products/PaginationProvider";
+import { useSearchParams } from "next/navigation";
+import { useEffect } from "react";
 
 function ProductsSection() {
-  const { data, loading, filters, setFilters, refetch } = useProducts();
-  const [categories, setCategories] = useState<any>([]);
+  const searchCategory = useSearchParams()?.get("category");
+  const { data, loading, filters, setFilters, refetch, totalPages } =
+    useProducts();
+
+  const onPageChange = (page: number) => {
+    setFilters({ ...filters, page });
+
+    setTimeout(() => {
+      window.scrollTo({ top: 300, behavior: "smooth" });
+    }, 500);
+  };
+
+  const defaultSearch = () => {
+    const getId = () => {
+      switch (searchCategory) {
+        case "turkish": {
+          return 3;
+        }
+        case "spresso": {
+          return 5;
+        }
+        case "turkish": {
+          return 1;
+        }
+      }
+    };
+
+    return searchCategory ? getId() : "all";
+  };
 
   useEffect(() => {
-    getCategories()
-      .then((res) => setCategories(res))
-      .catch((err) => console.log(err));
+    if (searchCategory && defaultSearch() && defaultSearch() != "all") {
+      setFilters({ ...filters, category: defaultSearch()?.toString() || "" });
+    }
   }, []);
 
-  console.log(categories);
+  console.log(data?.products);
+  console.log(data?.categories);
+  console.log(defaultSearch());
   return (
-    <section className="container flex gap-[70px] py-[50px] mt-[50px] ">
+    <section className="container flex flex-col sm:flex-row gap-[70px] py-[50px] mt-[50px] relative">
+      <ProductsFilter
+        filters={filters}
+        setFilters={setFilters}
+        categories={data?.categories}
+        defaultSearch={defaultSearch}
+      />
+
       <div>
-        <div>
-          <Label htmlFor="search" className="text-xl font-semibold font-cairo">
-            بحث عن منتج
-          </Label>
-          <Input
-            type="text"
-            name="search"
-            id="search"
-            placeholder="بحث"
-            className="mt-2 w-[200px]"
-          />
+        <h5 className="text-[23px] font-bold">
+          المنتجات المتاحة {!!data?.count && <b>({data?.count})</b>}
+        </h5>
+        <div className="flex gap-8 flex-wrap mt-8 justify-center md:justify-start items-stretch ">
+          {loading &&
+            Array.from({ length: 3 }).map((_, index) => (
+              <LoadingProductCatd key={index} />
+            ))}
+          {!loading &&
+            data?.products?.map((product: ProductTypes, index: number) => (
+              <ProductCard
+                key={index}
+                product={product}
+                className="h-fit w-[calc(33%-2rem)] min-w-[300px] bg-beige-100"
+              />
+            ))}
         </div>
 
-        <div className="mt-10">
-          <Label htmlFor="search" className="text-xl font-semibold font-cairo">
-            التصنيفات
-          </Label>
-          {/* <Input
-            type="text"
-            name="search"
-            id="search"
-            placeholder="بحث"
-            className="mt-2 w-[200px]"
-          /> */}
-        </div>
+        <PaginationProvider
+          currPage={filters.page}
+          totalPages={totalPages}
+          onPageChange={onPageChange}
+        />
       </div>
-
-      <div>Products</div>
     </section>
   );
 }
