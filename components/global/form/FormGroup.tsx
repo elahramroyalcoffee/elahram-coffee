@@ -10,6 +10,7 @@ interface FormGroupProps {
   placeholder?: string;
   defaultValue?: any;
   isTextArea?: boolean;
+  onChange?: any;
 }
 
 function FormGroup({
@@ -20,12 +21,14 @@ function FormGroup({
   placeholder,
   defaultValue,
   isTextArea,
+  onChange,
 }: FormGroupProps) {
   const inputProps = {
     id: name,
     type: type,
     name: name,
     required: required,
+    onChange: onChange,
     placeholder: placeholder,
     defaultValue: defaultValue,
     autoComplete:

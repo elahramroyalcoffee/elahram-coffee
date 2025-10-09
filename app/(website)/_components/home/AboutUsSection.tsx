@@ -27,7 +27,7 @@ function AboutUsSection() {
             alt="about us photo"
             width={604}
             height={480}
-            className="max-w-[470px] h-auto object-cover"
+            className="max-w-[470px] w-[80%] h-auto object-cover"
           />
         </div>
       </div>

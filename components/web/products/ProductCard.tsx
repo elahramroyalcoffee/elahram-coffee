@@ -6,12 +6,12 @@ import Image from "next/image";
 import Link from "next/link";
 function ProductCard({ product }: any) {
   return (
-    <Card className="bg-brown-500/10 rounded-[50px] rounded-tr-none p-0  h-full">
+    <Card className="bg-brown-50 rounded-[50px] rounded-tr-none p-0  h-full">
       <Link
         href={`/products/${product.id}`}
         className=" hover:-translate-y-1 duration-300 transition-all rounded-[50px] rounded-tr-none "
       >
-        <CardContent className="flex flex-col aspect-square items-center justify-center p-4">
+        <CardContent className="flex flex-col aspect-square items-center justify-center p-4 ">
           <div className="max-h-[300px] w-full h-full">
             <Image
               src={`${process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL}/${product.image}`}
@@ -26,7 +26,7 @@ function ProductCard({ product }: any) {
             className="w-full  mt-6 flex items-end justify-between "
           >
             <div>
-              <span className="text-xl font-cairo text-black/90">
+              <span className="text-xl font-cairo text-black/90 font-semibold">
                 {product.title}
               </span>
               <p className="font-cairo text-gray-500/75 mt-2 ">
@@ -37,7 +37,7 @@ function ProductCard({ product }: any) {
               {product.product_sizes[0].price} جنيه
             </span>
           </div>
-          <div dir="rtl" className="mt-8">
+          <div dir="rtl" className="mt-8 justify-self-end">
             <PrimaryButton
               className="py-4 px-6"
               text="الدخول لصفحة المنتج"

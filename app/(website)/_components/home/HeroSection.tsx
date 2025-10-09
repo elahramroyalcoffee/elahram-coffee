@@ -103,7 +103,7 @@ function HeroSection() {
           </Carousel>
         </div>
       </div>
-      <p className="container max-w-[90%] w-1/2 bg-brown-100/20  px-4  py-2 rounded-lg   text-base font-semibold text-white/60  z-10 relative  h-10 overflow-hidden">
+      <p className="container max-w-[90%] w-full lg:w-1/2 bg-brown-100/20  px-4  py-2 rounded-lg   text-base font-semibold text-white/60  z-10 relative  h-10 overflow-hidden">
         <span className="text-center text-shadow-brown animate-banner absolute top-center right-[80%] text-nowrap flex-center  flex-row-reverse gap-2">
           <PiCoffeeFill className="text-brown-200" />
           عزيزي العميل, البضاعة المباعة ترد وتستبدل حتى لو فتحت الكيس عادي جدا

@@ -26,7 +26,7 @@ function MobileNavbar() {
       {openMenu && (
         <nav
           onClick={() => setOpenMenu(false)}
-          className="fixed  bg-beige-200 z-20 animate-move-right p-4 top-20 min-w-[250px] w-[500px] max-w-[80%] left-center overflow-hidden shadow-lg rounded-lg"
+          className="fixed  bg-beige-400 z-20 animate-move-right p-4 top-20 min-w-[250px] w-[500px] max-w-[80%] left-center overflow-hidden shadow-lg rounded-lg"
         >
           <ul className="flex flex-col  gap-4">
             {websiteLinks.map((link, idx) => (
