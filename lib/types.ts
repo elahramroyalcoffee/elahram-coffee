@@ -41,6 +41,7 @@ export type ProductTypes = {
   category?: CategoryTypes; // Optional nested category object
   created_at: string;
   updated_at: string;
+  in_stock: boolean;
 };
 
 export type ProductsTypes = ProductTypes[];
@@ -53,6 +54,7 @@ export type ShipmentTypes = {
   is_active: boolean;
   created_at: string;
   updated_at: string;
+  in_stock: boolean;
 };
 
 export type ShipmentsTypes = ShipmentTypes[];

@@ -4,6 +4,7 @@ import "./globals.css";
 // import "./theme.css";
 import { Toaster } from "@/components/ui/sonner";
 import { Cairo } from "next/font/google";
+import { Tajawal } from "next/font/google";
 // const geistSans = Geist({
 //   variable: "--font-geist-sans",
 //   subsets: ["latin"],
@@ -16,6 +17,10 @@ import { Cairo } from "next/font/google";
 
 const cairo = Cairo({
   subsets: ["arabic", "latin"],
+});
+const tajawal = Tajawal({
+  subsets: ["arabic", "latin"],
+  weight: ["200", "300", "400", "500", "700", "800", "900"],
 });
 
 export const metadata: Metadata = {
@@ -35,7 +40,7 @@ export default function RootLayout({
   return (
     <html lang="ar" dir="rtl">
       <body
-        className={`${cairo.className} antialiased`}
+        className={`${cairo.className} ${tajawal.className} antialiased`}
         suppressHydrationWarning
       >
         {children}

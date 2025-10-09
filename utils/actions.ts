@@ -401,6 +401,22 @@ export const addProductAction = async (prevState: any, formData: FormData) => {
   }
 };
 
+export const changeStockAction = async (productId: any, inStock: boolean) => {
+  try {
+    console.log(productId, inStock);
+    const { data } = await supabase
+      .from("products")
+      .update({ in_stock: inStock })
+      .eq("id", productId);
+
+    console.log(data);
+    return { message: "تم تغيير حالة المنتج بنجاح" };
+  } catch (error) {
+    console.log(error);
+    return renderError(error);
+  }
+};
+
 export const editProductAction = async (prevState: any, formData: FormData) => {
   try {
     let rawData = Object.fromEntries(formData);

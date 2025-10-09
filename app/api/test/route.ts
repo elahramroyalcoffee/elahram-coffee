@@ -33,6 +33,9 @@ const orderItems = [
 ];
 
 export async function GET(request: Request) {
+  const { data } = await supabase.from("products").select("*");
+  return Response.json(data);
+
   // const supabase = await createClient();
   // // type-casting here for convenience
   // // in practice, you should validate your inputs

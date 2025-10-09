@@ -25,8 +25,10 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import ConfirmButton from "@/components/global/form/ConfirmButtonForm";
-import { deleteProductAction } from "@/utils/actions";
+import { changeStockAction, deleteProductAction } from "@/utils/actions";
 import Loading from "@/components/global/ui/Loading";
+import { Switch } from "@/components/ui/switch";
+import { useState } from "react";
 
 function ProductsTable({ products, refetch, loading }: any) {
   return (
@@ -37,6 +39,7 @@ function ProductsTable({ products, refetch, loading }: any) {
           <TableHead>اسم المنتج</TableHead>
           <TableHead>وصف المنتج</TableHead>
           <TableHead>تصنيف المنتج</TableHead>
+          <TableHead>متوفر</TableHead>
           <TableHead>تاريخ الإنشاء</TableHead>
           <TableHead>الأدوات</TableHead>
         </TableRow>
@@ -61,6 +64,16 @@ function ProductsTable({ products, refetch, loading }: any) {
               <TableCell>{product.title}</TableCell>
               <TableCell>{product.description}</TableCell>
               <TableCell>{product.category?.title}</TableCell>
+              <TableCell>
+                <Switch
+                  id="product-in-stock"
+                  dir="ltr"
+                  defaultChecked={product.in_stock}
+                  onCheckedChange={(checked) =>
+                    changeStockAction(product.id, checked)
+                  }
+                />
+              </TableCell>
               <TableCell>{product.created_at}</TableCell>
               <TableCell>
                 <div className="flex-center gap-4">

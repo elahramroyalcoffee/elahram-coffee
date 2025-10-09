@@ -8,10 +8,10 @@ export const websiteLinks: Link[] = [
     name: "الصفحة الرئيسية",
     path: "/",
   },
-  {
-    name: "التصنيفات",
-    path: "/categories",
-  },
+  // {
+  //   name: "التصنيفات",
+  //   path: "/categories",
+  // },
   {
     name: "المنتجات",
     path: "/products",

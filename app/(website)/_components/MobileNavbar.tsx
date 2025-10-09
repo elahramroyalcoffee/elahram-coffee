@@ -26,19 +26,19 @@ function MobileNavbar() {
       {openMenu && (
         <nav
           onClick={() => setOpenMenu(false)}
-          className="fixed  bg-beige-100 z-20 w-[80vw]  p-4 top-20 animate-move-down left-center overflow-hidden shadow-lg rounded-lg"
+          className="fixed  bg-beige-200 z-20 animate-move-right p-4 top-20 min-w-[250px] w-[500px] max-w-[80%] left-center overflow-hidden shadow-lg rounded-lg"
         >
           <ul className="flex flex-col  gap-4">
             {websiteLinks.map((link, idx) => (
               <li
                 key={idx}
-                className={`border-r-4 hover:border-brown-300 transition  ${
+                className={` text-center not-last:border-b-2 transition  ${
                   isActivePath(link) ? "border-brown-300" : ""
                 }`}
               >
                 <Link
                   href={link.path}
-                  className={`text-black/60 hover:text-brown-600 text-xl xl:text-lg transition p-4 select-none w-full block
+                  className={`text-black/60 hover:text-brown-600 text-xl xl:text-lg transition p-2 select-none w-full block
                       ${isActivePath(link) ? "text-brown-600" : ""}
                       `}
                 >
