@@ -20,7 +20,7 @@ import spresso from "@/public/home/categories/3.png";
 function HeroSection() {
   return (
     <section className="h-lvh hero-section">
-      <div className="flex flex-center  h-[calc(100vh-20vh)] md:h-[calc(100vh-15vh)] gap-20  z-10 relative text-white ">
+      <div className="flex flex-center  h-[calc(100vh-10vh)] md:h-[calc(100vh-12vh)] gap-20  z-10 relative text-white ">
         <div className="hidden  w-[45%]">
           <Image src={hero} alt="hero image" className="w-full" />
         </div>
@@ -29,7 +29,7 @@ function HeroSection() {
             <h1 className="text-[34px] sm:text-[44px] font-bold">
               البن مزاج… وإنت مزاجك عندنا
             </h1>
-            <p className=" text-[18px] sm:text-2xl mt-6 text-white/60 leading-9 ">
+            <p className=" text-[18px] sm:text-2xl mt-6 text-[#d1bfa3] leading-9 ">
               نستورد أجود حبوب القهوة العالمية ليتم تحميصها وطحنها بعناية ودقة
               وبخبرة <b>35 عاما</b> من شغفنا بالقهوة نفخر بحفاظنا على مذاق متميز
               وسعى دائم لارضاء كافة الأذواق من عشاق القهوة
