@@ -9,7 +9,7 @@ import file from "@/public/icons/file.svg";
 
 function Footer() {
   return (
-    <footer className="py-[50px] container grid lg:grid-cols-2 mt-[120px]">
+    <footer className="py-[50px] container grid lg:grid-cols-2 mt-[120px] gap-6">
       <div className="flex-center  gap-4 ">
         <div>
           <Image
@@ -26,8 +26,8 @@ function Footer() {
           وسعي دائم لارضاء كافة الاذواق من عشاق القهوة
         </p>
       </div>
-      <div className="grid lg:grid-cols-2">
-        <div className="flex flex-col gap-4">
+      <div className="grid lg:grid-cols-2 gap-6">
+        <div className="flex flex-center lg:flex-center-reset  flex-col gap-4">
           <span className="font-cairo text-xl text-black/50 font-semibold">
             روابط سريعة
           </span>
@@ -43,7 +43,7 @@ function Footer() {
           </ul>
         </div>
 
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-center lg:flex-center-reset  flex-col gap-4">
           <span className="font-cairo text-xl text-black/50 font-semibold">
             معلومات الإتصال
           </span>

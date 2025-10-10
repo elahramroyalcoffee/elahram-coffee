@@ -8,7 +8,7 @@ interface Filters {
   page: number;
 }
 
-function useProducts() {
+export function useProducts() {
   const [filters, setFilters] = useState<Filters>({
     search: "",
     category: null,
@@ -99,4 +99,75 @@ function useProducts() {
   };
 }
 
-export default useProducts;
+export function useOneProduct({ productId }: any) {
+  const [data, setData] = useState<any>(null);
+  const [loading, setLoading] = useState(false);
+
+  const getOneProduct = async () => {
+    try {
+      setLoading(true);
+
+      // Query product details
+      const productQuery = supabase
+        .from("products")
+        .select(
+          `
+          id,
+      title,
+      description,
+      image,
+      in_stock,
+      product_sizes (
+        price,
+        size: sizes (
+          id,
+          size,
+          weight
+        )
+      )
+          `
+        )
+        .eq("id", productId)
+        .single();
+
+      // Query generic grinds data
+      const grindsQuery = supabase.from("grinds").select("*");
+
+      // Query generic sizes data
+      const sizesQuery = supabase.from("sizes").select("*");
+
+      // Query generic add_ons data
+      const addOnsQuery = supabase.from("add_ons").select("*");
+
+      // Run all queries concurrently
+      const [productRes, grindsRes, sizesRes, addOnsRes] = await Promise.all([
+        productQuery,
+        grindsQuery,
+        sizesQuery,
+        addOnsQuery,
+      ]);
+
+      if (productRes.error) throw productRes.error;
+      // Optionally check for errors in grindsRes, sizesRes, and addOnsRes
+
+      return {
+        product: productRes.data,
+        grinds: grindsRes.data,
+        sizes: sizesRes.data,
+        add_ons: addOnsRes.data,
+      };
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    getOneProduct().then((data) => setData(data));
+  }, []);
+  return {
+    data,
+    loading,
+  };
+}

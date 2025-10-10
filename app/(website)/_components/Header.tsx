@@ -1,14 +1,16 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import logo from "@/public/brownLogo.svg";
 import cart from "@/public/icons/ShoppingCartSimple.svg";
 import Image from "next/image";
 import Link from "next/link";
 import Navbar from "./Navbar";
 import MobileNavbar from "./MobileNavbar";
+import { CartCountContext } from "@/contexts/CartCountContext";
 
 function Header() {
   // const [y, setY] = useState(0);
+  const { count } = useContext(CartCountContext);
 
   useEffect(() => {
     const scrollY = (e: Event) => {
@@ -46,7 +48,7 @@ function Header() {
           {/* cart */}
           <Link
             href={"/cart"}
-            className=" rounded-full  w-10 h-10 flex-center cursor-pointer bg-brown-400 hover:bg-brown-500 group transition duration-100"
+            className="relative rounded-full  w-10 h-10 flex-center cursor-pointer bg-brown-400 hover:bg-brown-500 group transition duration-100"
           >
             <Image
               src={cart}
@@ -55,6 +57,9 @@ function Header() {
               height={20}
               className="h-auto invert-100 transition duration-100"
             />
+            <span className="text-brown-600 bg-beige-100 rounded-full p-1 absolute -top-2 -right-1 shadow-md flex-center font-bold w-6 h-6">
+              {count}
+            </span>
           </Link>
         </div>
       </header>
@@ -70,7 +75,7 @@ function Header() {
           {/* cart */}
           <Link
             href={"/cart"}
-            className=" rounded-full w-10 h-10 flex-center cursor-pointer bg-brown-400 group transition"
+            className=" rounded-full w-10 h-10 flex-center cursor-pointer bg-brown-400 group transition relative"
           >
             <Image
               src={cart}
@@ -79,6 +84,9 @@ function Header() {
               height={24}
               className="h-auto invert-100 transition"
             />
+            <span className="text-brown-600 bg-beige-100 rounded-full p-1 absolute -top-2 -right-1 shadow-md flex-center font-bold w-6 h-6">
+              {count}
+            </span>
           </Link>
           {/* Mobile navbar */}
           <MobileNavbar />

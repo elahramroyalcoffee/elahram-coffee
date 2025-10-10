@@ -8,12 +8,11 @@ import { LuMenu } from "react-icons/lu";
 function MobileNavbar() {
   const pathname = usePathname();
   const [openMenu, setOpenMenu] = useState(false);
-  console.log(pathname);
 
   const isActivePath = (link: any) => {
     return link.path == "/"
       ? pathname == link.path
-      : pathname.includes(link.path);
+      : pathname?.includes(link.path);
   };
   return (
     <div>

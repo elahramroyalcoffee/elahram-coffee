@@ -1,5 +1,5 @@
 "use client";
-import useProducts from "@/hooks/web/useProducts";
+import { useProducts } from "@/hooks/web/useProducts";
 import { ProductTypes } from "@/lib/types";
 import ProductsFilter from "./ProductsFilter";
 import ProductCard from "@/components/web/products/ProductCard";
@@ -28,8 +28,11 @@ function ProductsSection({ searchCategory }: any) {
         case "spresso": {
           return 5;
         }
-        case "turkish": {
+        case "beans": {
           return 1;
+        }
+        default: {
+          return "all";
         }
       }
     };

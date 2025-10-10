@@ -6,7 +6,6 @@ import React from "react";
 
 function Navbar() {
   const pathname = usePathname();
-  console.log(pathname);
   return (
     <nav>
       <ul className="flex gap-5">

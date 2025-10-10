@@ -26,7 +26,7 @@ function BackToTop() {
   return (
     <button
       onClick={scrollToTop}
-      className="scroll-to-top animate-fade-up fixed bottom-[6%] left-[5%] w-14 h-14 bg-brown-600 rounded-full shadow-xl flex-center cursor-pointer hover:scale-[1.05] active:scale-[0.90] focus:scale-[0.90] duration-300 transition"
+      className="scroll-to-top hidden animate-fade-up fixed bottom-[6%] left-[5%] w-14 h-14 bg-brown-600 rounded-full shadow-xl flex-center cursor-pointer hover:scale-[1.05] active:scale-[0.90] focus:scale-[0.90] duration-300 transition"
     >
       <FaArrowUp className="text-2xl text-white" />
     </button>

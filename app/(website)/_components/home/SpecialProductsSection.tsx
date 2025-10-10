@@ -29,14 +29,14 @@ async function SpecialProductsSection() {
             align: "start",
             loop: true,
           }}
-          className="w-full max-w-[75%] md:max-w-2xl lg:max-w-7xl mx-auto "
+          className="w-full max-w-[75%] md:max-w-[90%] lg:max-w-[93.5%] mx-auto "
           dir="ltr"
         >
           <CarouselContent>
             {data?.map((product, index) => (
               <CarouselItem
                 key={index}
-                className="md:basis-1/2 xl:basis-1/3 2xl:basis-1/4"
+                className="md:basis-1/2 lg:basis-1/3 2xl:basis-1/4"
               >
                 <div className="p-1 h-full">
                   <ProductCard product={product} />
