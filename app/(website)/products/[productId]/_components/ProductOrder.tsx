@@ -3,11 +3,16 @@ import { Label } from "@/components/ui/label";
 import {
   AddOnsTypes,
   GrindsTypes,
+  GrindTypes,
   ProductTypes,
   SizesTypes,
   SizeTypes,
 } from "@/lib/types";
-import React, { useRef, useState } from "react";
+import { Equal, MinusIcon, PlusIcon } from "lucide-react";
+import React, { useEffect, useRef, useState } from "react";
+import ProductVarients from "./ProductVarients";
+import PrimaryButton from "@/components/web/ui/PrimaryButton";
+import { FiShoppingCart } from "react-icons/fi";
 
 function ProductOrder({ data }: any) {
   const product: ProductTypes = data.product;
@@ -24,14 +29,24 @@ function ProductOrder({ data }: any) {
       (ps: any) => ps.size.id == sizes[0]?.id
     ).price,
     grind_id: grinds[0]?.id,
-    add_ons: [],
+    // add_ons: [],
   };
 
   const [currentItem, setCurrentItem] = useState(initCurrentItem);
+  const [currentAddOns, setCurrentAddOns] = useState([]);
   const [totalPrice, setTotalPrice] = useState(
     currentItem.quantity * currentItem.unit_price || 0
   );
-  // Calc total price into use effect to get the total dependency on currentItem change.
+
+  // Get Total Price
+  useEffect(() => {
+    let totalPriceCount = 0;
+    totalPriceCount += currentItem.quantity * currentItem.unit_price;
+    totalPriceCount += currentAddOns.reduce((pre, curr: any) => {
+      return pre + curr.total_price;
+    }, 0);
+    setTotalPrice(totalPriceCount);
+  }, [currentAddOns, currentItem]);
 
   const changeSizeHandle = (size: SizeTypes) => {
     const newUnitPrice = product.product_sizes.find(
@@ -44,8 +59,58 @@ function ProductOrder({ data }: any) {
     });
   };
 
-  console.log(currentItem);
-  console.log(totalPrice);
+  const changeGrindHandle = (grind: GrindTypes) => {
+    setCurrentItem({
+      ...currentItem,
+      grind_id: grind.id,
+    });
+  };
+
+  const changeAddOnHandle = (addOn: any, quantity: any) => {
+    console.log(addOn, quantity);
+    let boxOfCurrentAddOns: any = currentAddOns.slice();
+    const newAddOn = {
+      add_ons_id: addOn.id,
+      add_ons_name: addOn.name,
+      unit_price: +addOn.price,
+      quantity: +quantity,
+      total_price: +quantity * +addOn.price,
+    };
+    console.log(newAddOn);
+
+    const isExist = !!boxOfCurrentAddOns.find(
+      (currAddOn: any) => currAddOn.add_ons_id == addOn.id
+    );
+
+    if (isExist) {
+      boxOfCurrentAddOns = boxOfCurrentAddOns.map((currAddOn: any) => {
+        if (currAddOn.add_ons_id == addOn.id) {
+          console.log("HERE");
+          return newAddOn;
+        } else {
+          return currAddOn;
+        }
+      });
+    } else {
+      boxOfCurrentAddOns.push(newAddOn);
+    }
+
+    setCurrentAddOns(boxOfCurrentAddOns);
+  };
+
+  const showAddOnTotalPrice = (addOn: any) => {
+    return (
+      !!(currentAddOns as any).find(
+        (currAddOn: any) => currAddOn.add_ons_id == addOn.id
+      ) &&
+      (currentAddOns as any).find(
+        (currAddOn: any) => currAddOn.add_ons_id == addOn.id
+      )?.total_price > 0
+    );
+  };
+  // console.log(currentItem);
+  // console.log(totalPrice);
+  console.log(currentAddOns);
   return (
     <div className="container">
       <div>
@@ -59,66 +124,32 @@ function ProductOrder({ data }: any) {
           </span>
         </div>
 
-        <div className="mt-[40px]">
-          <Label className="text-[20px] font-semibold font-cairo text-black/50 ">
-            الوزن
-          </Label>
-          <ul className="flex gap-6 max-w-[588px] flex-wrap mt-6">
-            {sizes.map((size) => (
-              <li
-                key={size.id}
-                onClick={() => changeSizeHandle(size)}
-                className={`flex-center py-4 px-14  rounded-full border border-brown-500 cursor-pointer 
-                  hover:bg-brown-500 hover:text-beige-50 transition duration-300 font-semibold
-                  ${
-                    currentItem.size_id == size.id
-                      ? "bg-brown-500 text-beige-50"
-                      : "bg-white text-brown-500"
-                  }`}
-              >
-                <span className="flex">{size.weight} جم</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-        <div className="mt-[32px]">
-          <Label className="text-[20px] font-semibold font-cairo text-black/50 ">
-            الطحنة
-          </Label>
-          <ul className="flex gap-6 max-w-[588px] flex-wrap mt-6">
-            {grinds.map((grind) => (
-              <li
-                key={grind.id}
-                className={`flex-center py-4 px-14  rounded-full border border-brown-500 cursor-pointer 
-                  hover:bg-brown-500 hover:text-beige-50 transition duration-300 font-semibold
-                  ${
-                    currentItem.grind_id == grind.id
-                      ? "bg-brown-500 text-beige-50"
-                      : "bg-white text-brown-500"
-                  }`}
-              >
-                <span className="flex">{grind.name}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-        <div className="mt-[32px]">
-          <Label className="text-[20px] font-semibold font-cairo text-black/50 ">
-            الإضافات
-          </Label>
-          <ul className="flex flex-col gap-6 max-w-[588px] flex-wrap mt-6">
-            {addOns.map((addOn) => (
-              <li
-                key={addOn.id}
-                className={`flex gap-2
-                  `}
-              >
-                <Input type="number" className="w-14" max={10} min={0} />
-                <span className="flex">{addOn.name}</span>-
-                <span>{addOn.price} جنيه</span>
-              </li>
-            ))}
-          </ul>
+        <ProductVarients
+          sizes={sizes}
+          changeSizeHandle={changeSizeHandle}
+          currentItem={currentItem}
+          grinds={grinds}
+          changeGrindHandle={changeGrindHandle}
+          addOns={addOns}
+          changeAddOnHandle={changeAddOnHandle}
+          showAddOnTotalPrice={showAddOnTotalPrice}
+          currentAddOns={currentAddOns}
+        />
+
+        <div className="mt-[65px] flex items-center gap-15">
+          <div className="flex max-w-[140px] items-center justify-between gap-2 px-6 py-3  rounded-full border border-brown-500 ">
+            <PlusIcon className="text-black/50 font-bold cursor-pointer" />
+            <Input
+              value={currentItem.quantity}
+              type="text"
+              className="w-12 border-none text-center !text-xl font-cairo text-brown-500"
+            />
+            <MinusIcon className="text-black/50 font-bold cursor-pointer" />
+          </div>
+          <div>
+            {/* Add to cart button */}
+            <PrimaryButton text="أضف الي عربة التسوق" Icon={FiShoppingCart} />
+          </div>
         </div>
       </div>
       <div>{/* Gallery */}</div>
