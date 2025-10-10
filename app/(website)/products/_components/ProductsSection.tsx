@@ -1,21 +1,13 @@
 "use client";
-// import { Checkbox } from "@/components/ui/checkbox";
-// import { Input } from "@/components/ui/input";
-// import { Label } from "@/components/ui/label";
-// import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import useProducts from "@/hooks/web/useProducts";
 import { ProductTypes } from "@/lib/types";
-// import { supabase } from "@/utils/supabase";
-// import React, { use, useEffect, useState } from "react";
 import ProductsFilter from "./ProductsFilter";
 import ProductCard from "@/components/web/products/ProductCard";
 import LoadingProductCatd from "@/components/web/products/LoadingProductCatd";
 import PaginationProvider from "@/components/web/products/PaginationProvider";
-import { useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 
-function ProductsSection() {
-  const searchCategory = useSearchParams()?.get("category");
+function ProductsSection({ searchCategory }: any) {
   const { data, loading, filters, setFilters, refetch, totalPages } =
     useProducts();
 
@@ -51,9 +43,9 @@ function ProductsSection() {
     }
   }, []);
 
-  console.log(data?.products);
-  console.log(data?.categories);
-  console.log(defaultSearch());
+  // console.log(data?.products);
+  // console.log(data?.categories);
+  // console.log(defaultSearch());
   return (
     <section className="container flex flex-col sm:flex-row gap-[70px] py-[50px] mt-[50px] relative">
       <ProductsFilter

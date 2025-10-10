@@ -17,7 +17,7 @@ function OrdersContent() {
   const totalPagesRef = useRef(1);
   const totalOrdersRef = useRef(0);
   const searchParams = useSearchParams();
-  const highlightOrderId = searchParams.get("highlight");
+  const highlightOrderId = searchParams?.get("highlight");
 
   useEffect(() => {
     const changes = supabase

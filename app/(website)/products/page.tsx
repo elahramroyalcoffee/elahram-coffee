@@ -4,7 +4,8 @@ import Link from "next/link";
 import React from "react";
 import ProductsSection from "./_components/ProductsSection";
 
-function ProductsPage() {
+async function ProductsPage({ searchParams }: any) {
+  const { category: searchCategory } = await searchParams;
   return (
     <main className="bg-beige-50">
       <PageHeader
@@ -12,7 +13,7 @@ function ProductsPage() {
         description="تشكيلة البن المختارة بعناية لإسعادكم"
       />
 
-      <ProductsSection />
+      <ProductsSection searchCategory={searchCategory} />
     </main>
   );
 }
