@@ -11,20 +11,20 @@ function CategoriesSection() {
     <section className="py-[50px] container">
       <SectionHeader title="التصنيفات" />
 
-      <ul className="flex-center gap-26 flex-wrap">
-        <li className=" min-w-[200px]">
+      <ul className="flex-center gap-20 lg:gap-26 flex-wrap">
+        <li className=" w-[160px] lg:min-w-[200px]">
           <Link
             href={`/products?category=turkish`}
-            className="flex-center flex-col gap-8"
+            className="flex-center flex-col gap-4 lg:gap-8"
           >
             <Image src={turkish} alt="turkish category" />
             <span className="font-cairo text-[31px] font-semibold">تركي</span>
           </Link>
         </li>
-        <li className=" min-w-[200px]">
+        <li className=" w-[160px] lg:min-w-[200px]">
           <Link
             href={`/products?category=spresso`}
-            className="flex-center flex-col gap-8"
+            className="flex-center flex-col gap-4 lg:gap-8"
           >
             <Image src={spresso} alt="spresso category" />
             <span className="font-cairo text-[31px] font-semibold">
@@ -32,13 +32,13 @@ function CategoriesSection() {
             </span>
           </Link>
         </li>
-        <li className=" min-w-[200px]">
+        <li className=" w-[160px] lg:min-w-[200px]">
           <Link
             href={`/products?category=beans`}
-            className="flex-center flex-col gap-8"
+            className="flex-center flex-col gap-4 lg:gap-8"
           >
             <Image src={beans} alt="beans category" />
-            <span className="font-cairo text-[31px] font-semibold">
+            <span className="font-cairo text-[31px] w-max font-semibold">
               حبوب القهوة
             </span>
           </Link>

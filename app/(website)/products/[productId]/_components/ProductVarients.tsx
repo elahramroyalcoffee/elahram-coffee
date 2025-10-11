@@ -20,12 +20,12 @@ function ProductVarients({
         <Label className="text-[20px] font-semibold font-cairo text-black/50 ">
           الوزن
         </Label>
-        <ul className="flex gap-6 max-w-[588px] flex-wrap mt-6">
+        <ul className="grid grid-cols-2 sm:flex gap-4  sm:gap-6 max-w-[588px] flex-wrap mt-6">
           {sizes.map((size: any) => (
             <li
               key={size.id}
               onClick={() => changeSizeHandle(size)}
-              className={`flex-center py-4 px-14  rounded-full border border-brown-500 cursor-pointer 
+              className={`flex-center py-4 px-6 sm:px-14  rounded-full border border-brown-500 cursor-pointer 
                     hover:bg-brown-500 hover:text-beige-50 transition duration-300 font-semibold
                     ${
                       currentItem.size_id == size.id
@@ -42,12 +42,12 @@ function ProductVarients({
         <Label className="text-[20px] font-semibold font-cairo text-black/50 ">
           الطحنة
         </Label>
-        <ul className="flex gap-6 max-w-[588px] flex-wrap mt-6">
+        <ul className="grid grid-cols-2 sm:flex gap-4  sm:gap-6 max-w-[588px] flex-wrap mt-6">
           {grinds.map((grind: any) => (
             <li
               onClick={() => changeGrindHandle(grind)}
               key={grind.id}
-              className={`flex-center py-4 px-14  rounded-full border border-brown-500 cursor-pointer 
+              className={`flex-center py-4 px-6 sm:px-14  rounded-full border border-brown-500 cursor-pointer 
                     hover:bg-brown-500 hover:text-beige-50 transition duration-300 font-semibold
                     ${
                       currentItem.grind_id == grind.id

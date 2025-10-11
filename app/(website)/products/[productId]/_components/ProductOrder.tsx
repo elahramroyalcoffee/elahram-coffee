@@ -9,14 +9,24 @@ import {
   SizeTypes,
 } from "@/lib/types";
 import { Equal, MinusIcon, PlusIcon } from "lucide-react";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import ProductVarients from "./ProductVarients";
 import PrimaryButton from "@/components/web/ui/PrimaryButton";
 import { FiShoppingCart } from "react-icons/fi";
+import { CartItemsContext } from "@/contexts/CartItemsContext";
+import { toast } from "sonner";
+import { Toaster } from "@/components/ui/sonner";
+import { FaCheckCircle } from "react-icons/fa";
+import Link from "next/link";
+import { LuShoppingCart } from "react-icons/lu";
+import Image from "next/image";
 
 function ProductOrder({ data }: any) {
   const product: ProductTypes = data.product;
-  const sizes: SizesTypes = data.sizes;
+  const sizes: SizesTypes = data.sizes.filter(
+    (size: SizeTypes) =>
+      !!product.product_sizes.find((ps: any) => ps.size.id == size.id)
+  );
   const grinds: GrindsTypes = data.grinds;
   const addOns: AddOnsTypes = data.add_ons;
 
@@ -32,6 +42,7 @@ function ProductOrder({ data }: any) {
     // add_ons: [],
   };
 
+  const { cartItems, addToCartHandle } = useContext(CartItemsContext);
   const [currentItem, setCurrentItem] = useState(initCurrentItem);
   const [currentAddOns, setCurrentAddOns] = useState([]);
   const [totalPrice, setTotalPrice] = useState(
@@ -42,9 +53,10 @@ function ProductOrder({ data }: any) {
   useEffect(() => {
     let totalPriceCount = 0;
     totalPriceCount += currentItem.quantity * currentItem.unit_price;
-    totalPriceCount += currentAddOns.reduce((pre, curr: any) => {
+    const addOnsTotal = currentAddOns.reduce((pre, curr: any) => {
       return pre + curr.total_price;
     }, 0);
+    totalPriceCount += addOnsTotal * currentItem.quantity;
     setTotalPrice(totalPriceCount);
   }, [currentAddOns, currentItem]);
 
@@ -112,12 +124,12 @@ function ProductOrder({ data }: any) {
   // console.log(totalPrice);
   console.log(currentAddOns);
   return (
-    <div className="container">
+    <div className="container flex-center flex-col-reverse lg:flex-row items-center lg:items-start gap-12">
       <div>
         <div>
           <h1 className="text-[44px] font-bold">{product.title}</h1>
           <span className="flex text-black/50 text-[35px] mt-4">
-            {currentItem.quantity * currentItem.unit_price || 0} جنيه
+            {currentItem.unit_price} جنيه
           </span>
           <span className="text-gray-600 font-cairo mt-6 inline-block">
             {product.description}
@@ -136,23 +148,94 @@ function ProductOrder({ data }: any) {
           currentAddOns={currentAddOns}
         />
 
-        <div className="mt-[65px] flex items-center gap-15">
+        <div className="mt-[65px] text-xl font-cairo text-brown-300 text-center sm:text-start">
+          <span>الإجمالي: </span>
+          <span className="font-bold">{totalPrice} جنيه</span>
+        </div>
+
+        <div className="mt-[45px] flex flex-col sm:flex-row items-center gap-8 sm:gap-15">
           <div className="flex max-w-[140px] items-center justify-between gap-2 px-6 py-3  rounded-full border border-brown-500 ">
-            <PlusIcon className="text-black/50 font-bold cursor-pointer" />
+            <PlusIcon
+              onClick={() =>
+                setCurrentItem({
+                  ...currentItem,
+                  quantity:
+                    currentItem.quantity > 0 && currentItem.quantity < 100
+                      ? currentItem.quantity + 1
+                      : currentItem.quantity,
+                })
+              }
+              className="text-black/50 font-bold cursor-pointer"
+            />
             <Input
               value={currentItem.quantity}
+              onChange={(e) =>
+                setCurrentItem({
+                  ...currentItem,
+                  quantity:
+                    +e.currentTarget.value > 0 && +e.currentTarget.value < 100
+                      ? +e.currentTarget.value
+                      : currentItem.quantity,
+                })
+              }
               type="text"
-              className="w-12 border-none text-center !text-xl font-cairo text-brown-500"
+              className="w-15 border-none text-center !text-xl font-cairo text-brown-500"
             />
-            <MinusIcon className="text-black/50 font-bold cursor-pointer" />
+            <MinusIcon
+              onClick={() =>
+                setCurrentItem({
+                  ...currentItem,
+                  quantity:
+                    currentItem.quantity > 1 ? currentItem.quantity - 1 : 1,
+                })
+              }
+              className="text-black/50 font-bold cursor-pointer"
+            />
           </div>
           <div>
             {/* Add to cart button */}
-            <PrimaryButton text="أضف الي عربة التسوق" Icon={FiShoppingCart} />
+            <PrimaryButton
+              onClick={() => {
+                addToCartHandle({
+                  ...currentItem,
+                  total_price: totalPrice,
+                  add_ons: currentAddOns,
+                });
+                toast(
+                  <span className="flex-center gap-2 w-max mx-auto ">
+                    <FaCheckCircle className="text-brown-400 text-lg" />
+                    تمت الإضافة الى عربة التسوق بنجاح.
+                    <Link
+                      href={"/cart"}
+                      className="text-brown-400 font-bold  flex-center items-center gap-1 underline"
+                    >
+                      <LuShoppingCart className="text-sm max-sm:hidden" />
+                      العربة
+                    </Link>
+                  </span>,
+                  {
+                    position: "top-center",
+                  }
+                );
+              }}
+              text="أضف الي عربة التسوق"
+              Icon={FiShoppingCart}
+              className="px-8 "
+            />
+            <Toaster />
           </div>
         </div>
       </div>
-      <div>{/* Gallery */}</div>
+
+      <div className="lg:sticky lg:top-20">
+        <Image
+          src={`${process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL}/${product.image}`}
+          alt="Product photo"
+          width={480}
+          height={587}
+          className="rounded-lg shadow-lg "
+        />
+      </div>
     </div>
   );
 }

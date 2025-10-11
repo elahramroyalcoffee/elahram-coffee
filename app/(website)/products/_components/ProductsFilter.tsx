@@ -18,7 +18,7 @@ function ProductsFilter({
   }, [debouncedValue]);
 
   return (
-    <div className="bg-beige-100/50 shadow-sm p-8 rounded-lg h-fit  top-20  md:sticky  max-sm:w-fit max-sm:mx-auto">
+    <div className="bg-beige-100/50 shadow-sm p-8 rounded-lg h-fit  top-20  lg:sticky  max-lg:w-fit max-lg:mx-auto">
       <div>
         <Label htmlFor="search" className="text-xl font-semibold font-cairo">
           بحث عن منتج

@@ -139,13 +139,36 @@ export function useOneProduct({ productId }: any) {
       // Query generic add_ons data
       const addOnsQuery = supabase.from("add_ons").select("*");
 
+      const productsQuery = supabase
+        .from("products")
+        .select(
+          `
+    id,
+    title,
+    description,
+    image,
+    in_stock,
+    product_sizes (
+      price,
+      size: sizes (
+        id,
+        size,
+        weight
+      )
+    )
+  `
+        )
+        .limit(10);
+
       // Run all queries concurrently
-      const [productRes, grindsRes, sizesRes, addOnsRes] = await Promise.all([
-        productQuery,
-        grindsQuery,
-        sizesQuery,
-        addOnsQuery,
-      ]);
+      const [productRes, grindsRes, sizesRes, addOnsRes, productsRes] =
+        await Promise.all([
+          productQuery,
+          grindsQuery,
+          sizesQuery,
+          addOnsQuery,
+          productsQuery,
+        ]);
 
       if (productRes.error) throw productRes.error;
       // Optionally check for errors in grindsRes, sizesRes, and addOnsRes
@@ -155,6 +178,7 @@ export function useOneProduct({ productId }: any) {
         grinds: grindsRes.data,
         sizes: sizesRes.data,
         add_ons: addOnsRes.data,
+        products: productsRes.data,
       };
     } catch (error) {
       console.log(error);

@@ -50,7 +50,7 @@ function ProductsSection({ searchCategory }: any) {
   // console.log(data?.categories);
   // console.log(defaultSearch());
   return (
-    <section className="container flex flex-col sm:flex-row gap-[70px] py-[50px] mt-[50px] relative">
+    <section className="container flex flex-col lg:flex-row gap-[70px] py-[50px] mt-[50px] relative">
       <ProductsFilter
         filters={filters}
         setFilters={setFilters}
@@ -62,7 +62,7 @@ function ProductsSection({ searchCategory }: any) {
         <h5 className="text-[23px] font-bold">
           المنتجات المتاحة {!!data?.count && <b>({data?.count})</b>}
         </h5>
-        <div className="flex gap-8 flex-wrap mt-8 justify-center md:justify-start items-stretch ">
+        <div className="hidden lg:flex gap-8 flex-wrap mt-8 justify-center md:justify-start items-stretch ">
           {loading &&
             Array.from({ length: 3 }).map((_, index) => (
               <LoadingProductCatd key={index} />
@@ -74,6 +74,17 @@ function ProductsSection({ searchCategory }: any) {
                 product={product}
                 className="h-fit w-[calc(33%-2rem)] min-w-[300px] bg-beige-100"
               />
+            ))}
+        </div>
+
+        <div className="lg:hidden grid grid-cols-2 md:grid-cols-3 gap-6 mt-6">
+          {loading &&
+            Array.from({ length: 3 }).map((_, index) => (
+              <LoadingProductCatd key={index} />
+            ))}
+          {!loading &&
+            data?.products?.map((product: ProductTypes, index: number) => (
+              <ProductCard key={index} product={product} />
             ))}
         </div>
 

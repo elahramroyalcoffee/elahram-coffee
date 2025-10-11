@@ -7,12 +7,17 @@ export const CartItemsProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const [cartItems, setCartItems] = useState([]);
+  const [cartItems, setCartItems] = useState<any>([]);
 
-  const addToCartHandle = (newCartItem: any) => {};
+  const addToCartHandle = (newCartItem: any) => {
+    console.log("new item");
+    setCartItems([...cartItems, newCartItem]);
+  };
 
   return (
-    <CartItemsContext.Provider value={{ cartItems, addToCartHandle }}>
+    <CartItemsContext.Provider
+      value={{ cartItems, addToCartHandle, count: cartItems.length }}
+    >
       {children}
     </CartItemsContext.Provider>
   );

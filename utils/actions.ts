@@ -409,7 +409,6 @@ export const changeStockAction = async (productId: any, inStock: boolean) => {
       .update({ in_stock: inStock })
       .eq("id", productId);
 
-    console.log(data);
     return { message: "تم تغيير حالة المنتج بنجاح" };
   } catch (error) {
     console.log(error);

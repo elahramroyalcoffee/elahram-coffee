@@ -1,10 +1,15 @@
 import React from "react";
 
-function PrimaryButton({ Icon, text, className = "" }: any) {
+function PrimaryButton({
+  Icon,
+  text,
+  className = "",
+  onClick = undefined,
+}: any) {
   return (
-    <button className={`btn-primary ${className}`}>
-      <Icon className="w-5 h-5" />
-      <span className="text-sm lg:text-lg font-bold">{text}</span>
+    <button onClick={onClick} className={`btn-primary ${className}`}>
+      <Icon className="w-4 h-4 sm:w-5 sm:h-5" />
+      <span className="text-xs sm:text-sm lg:text-lg font-bold ">{text}</span>
     </button>
   );
 }

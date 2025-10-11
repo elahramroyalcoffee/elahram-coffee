@@ -7,10 +7,12 @@ import Link from "next/link";
 import Navbar from "./Navbar";
 import MobileNavbar from "./MobileNavbar";
 import { CartCountContext } from "@/contexts/CartCountContext";
+import { CartItemsContext } from "@/contexts/CartItemsContext";
+import { usePathname } from "next/navigation";
 
 function Header() {
   // const [y, setY] = useState(0);
-  const { count } = useContext(CartCountContext);
+  const { count } = useContext(CartItemsContext);
 
   useEffect(() => {
     const scrollY = (e: Event) => {
@@ -33,10 +35,14 @@ function Header() {
     };
   }, []);
 
+  const pathName = usePathname();
   return (
     <>
       {/* lg screens header */}
-      <header className="container bg-beige-600/98 px-8 py-0 rounded-full duration-400 max-w-[90%] transition-all fixed left-center top-4 flex-between z-20 hidden lg:flex">
+      <header
+        className={`container bg-beige-600/98 px-8 py-0 rounded-full duration-400 max-w-[90%] transition-all fixed left-center top-4 flex-between z-20 hidden lg:flex
+        ${pathName?.includes("products") ? "!bg-beige-100" : ""}`}
+      >
         <Link href={"/"}>
           <Image src={logo} alt="logo" width={66.99} height={65} className="" />
         </Link>
@@ -64,7 +70,10 @@ function Header() {
         </div>
       </header>
       {/* small screens header */}
-      <header className="container bg-beige-600/98 px-8 py-1 rounded-full duration-400 transition-all fixed left-center top-4 max-w-[90%] flex-between z-20 lg:hidden flex">
+      <header
+        className={`container bg-beige-600/98 px-8 py-1 rounded-full duration-400 transition-all fixed left-center top-4 max-w-[90%] flex-between z-20 lg:hidden flex
+         ${pathName?.includes("products") ? "!bg-beige-100" : ""}`}
+      >
         <Link href={"/"}>
           <Image src={logo} alt="logo" width={66.99} height={65} className="" />
         </Link>

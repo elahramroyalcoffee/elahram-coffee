@@ -12,7 +12,7 @@ function AboutUsSection() {
         <div className="flex-center flex-wrap lg:flex-nowrap gap-8">
           <div className="max-w-[470px]">
             <h5 className="text-3xl font-bold">بن الأهرام</h5>
-            <p className="mt-6 text-black/60 text-2xl">
+            <p className="mt-6 text-black/60 text-lg lg:text-2xl">
               نستورد أجود حبوب القهوة الخضراء من مختلف أنحاء العالم، لنقوم
               بتحميصها وطحنها بعناية ودقة على أيدي خبراء يمتلكون أكثر من 35
               عامًا من الشغف والخبرة في عالم القهوة. منذ بدايتنا ونحن نضع الجودة
